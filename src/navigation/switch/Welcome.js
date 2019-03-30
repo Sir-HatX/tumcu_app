@@ -116,6 +116,7 @@ export default class Welcome extends Component {
               onSubmitEditing={() => this.state.text}
             />
             <Icon
+              onPress={() => this.props.navigation.navigate("Drawer")}
               name="arrowright"
               size={35}
               style={
