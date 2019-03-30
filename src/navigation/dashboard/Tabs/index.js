@@ -6,7 +6,7 @@ import Event from 'react-native-vector-icons/MaterialIcons';
 
 import Home from './Home/HomeStack';
 import Gallery from './Gallery/Gallery';
-import Events from './Events/Events';
+//import Events from './Events/Events';
 import Learn from './Learn/Learn';
 
 export default createMaterialBottomTabNavigator({
@@ -29,16 +29,16 @@ export default createMaterialBottomTabNavigator({
 
         }
     },
-    EVENTS: {
-        screen: Events,
-        navigationOptions: {
-            tabBarIcon: ({ tintColor }) =>
-                (
-                <Event name="event" size={25} style={{color:tintColor}} />
-                )
+    // EVENTS: {
+    //     screen: Events,
+    //     navigationOptions: {
+    //         tabBarIcon: ({ tintColor }) =>
+    //             (
+    //             <Event name="event" size={25} style={{color:tintColor}} />
+    //             )
 
-        }
-    },
+    //     }
+    // },
     LEARN: {
         screen: Learn,
         navigationOptions: {
@@ -58,6 +58,6 @@ export default createMaterialBottomTabNavigator({
         shifting: true,
         activeTintColor: 'red',
         swipeEnabled: true,
-        order:['HOME','EVENTS','LEARN','GALLERY' ]
+        order:['HOME','GALLERY','LEARN' ]
     }
 );
