@@ -6,4 +6,5 @@ import Stack from '../dashboard/Stack/index';
 export default  createSwitchNavigator({
       welcome: Welcome,
       Drawer: Dashboard
-    });
+    },
+    {initialRouteName:"Drawer"});

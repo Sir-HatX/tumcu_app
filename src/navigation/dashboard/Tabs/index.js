@@ -3,6 +3,7 @@ import { createMaterialBottomTabNavigator } from 'react-navigation-material-bott
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon5 from 'react-native-vector-icons/FontAwesome5';
 import Event from 'react-native-vector-icons/MaterialIcons';
+import configs from '../../../Config/configs'
 
 import Home from './Home/HomeStack';
 import Gallery from './Gallery/Gallery';
@@ -52,9 +53,9 @@ export default createMaterialBottomTabNavigator({
 },
     {
         initialRouteName: 'HOME',
-        activeColor: 'green',
-        inactiveColor: 'grey',
-        barStyle: { backgroundColor: 'white' },
+        activeColor:'white',
+        inactiveColor: configs.colors.main_bright,
+        barStyle: { backgroundColor:configs.colors.main_dark },
         shifting: true,
         activeTintColor: 'red',
         swipeEnabled: true,

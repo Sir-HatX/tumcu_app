@@ -1,68 +1,48 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View,Dimensions, Button,ImageBackground ,FlatList,List} from 'react-native';
-import Card from './../../../../componets/feed/card';
+import React, { Component } from "react";
+import configs from "../../../../Config/configs";
+import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
+const {width, height}= Dimensions.get('window')
 
-let devWidth = Dimensions.get('window').width;
-
-
-export default class Home extends Component {
-  constructor(){
-    super();
-    this.state = {
-      page:0,
-      data:[],
-      isLoading:false
-    }
-  }
- 
-  
-  componentDidMount() {
-    this.makeRemoteRequest();
-  }
-  makeRemoteRequest = () => {
-    const { page } = this.state;
-    const url = `http://mreal.herokuapp.com/property`;
-
-    fetch(url)
-      .then(response => response.json())
-      .then(responseJson => {
-        this.setState({
-          isLoading: false,
-          refreshing: false,
-          data:responseJson.available ,
-        });
-      })
-      .catch(error => {
-        this.setState({ isLoading: false, refreshing: false });
-        console.error(error);
-      });
+class Home extends Component {
+  static navigationOptions = {
+    header: null
   };
-
   render() {
     return (
-      
-      <FlatList
-        style={{ Direction: 'row',margin:5,backgroundColor:'lightgrey' }}
-        data={this.state.data}
-        keyExtractor={item => item._id}
-        renderItem={({ item }) => (
-         <View style={{height:devWidth/1.6,width:devWidth-30,margin:10,backgroundColor:'white',borderRadius:10}}>
-            <Text style={{margin:5,fontStyle:'italic',fontWeight:'bold'}}>{item.name}</Text>
-            <ImageBackground
-              source={{ uri: item.image }}
-              style={{
-                height: 200,
-                width: undefined,
-                alignSelf: 'stretch',
-                borderColor: '#7F8C8D',
-                overlayColor: '#E6B0AAk',
-                alignItems: 'center',
-                margin:2
-              }}></ImageBackground>
-         </View>      
-        )}
-        
-      />
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Image
+            source={require("../../../../Assets/tumcu_logo.png")}
+            style={{ height: 100, width: 100,margin:10 }}
+          />
+        </View>
+
+        <View style={styles.bodyContainer} >
+        <View style={styles.header}>
+          
+        </View>
+        <View style={styles.header}>
+          
+          </View>
+        </View>
+      </View>
     );
   }
 }
+export default Home;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: configs.colors.main_bright
+  },
+  header: {
+    flex: 1,
+    backgroundColor:'lightgray',
+    margin:10
+  },
+  bodyContainer: {
+    flex: 4,
+    backgroundColor: "gray"
+  }
+});
