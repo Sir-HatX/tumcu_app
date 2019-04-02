@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, Image} from 'react-native';
 import {createStackNavigator} from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import  Main  from "./Home";
@@ -12,7 +12,11 @@ export default createStackNavigator({
           title: 'Home',
           headerLeft: (
             <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-              <Icon
+            <Image
+            source={require("../../../../Assets/tumcu_logo.png")}
+            style={{ height: 50, width: 50, margin: 10 }}
+          />
+              {/* <Icon
                 name="bars"
                 style={{
                   color: '#aaa',
@@ -20,7 +24,7 @@ export default createStackNavigator({
                   marginLeft: 10,
                   fontSize: 30,
                 }}
-              />
+              /> */}
             </TouchableOpacity>
           ),
         }),
