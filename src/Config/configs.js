@@ -4,6 +4,9 @@ const colors = {
     main_bright:'#1CB5F9'
 }
 
+const urls={
+    main:'mtumcu.herokuapp.com'
+}
 
 
 
