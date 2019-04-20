@@ -7,10 +7,12 @@ import {
   Image,
   ImageBackground,
   Dimensions,
-  TextInput
+  TextInput,
 } from "react-native";
-import { withNavigation } from "react-navigation";
-import Icon from "react-native-vector-icons/AntDesign";
+import axios from 'axios'
+import { withNavigation } from "react-navigation"
+import Icon from "react-native-vector-icons/AntDesign"
+
 
 const { width, height } = Dimensions.get("window");
 export default class Welcome extends Component {
@@ -20,8 +22,40 @@ export default class Welcome extends Component {
       istext: false,
       text: "",
       arrowcolor: "white",
-      textLength: ""
+      textLength: "",
+      isloading:false,
     };
+  }
+
+  _pushNumber = async () => {
+    const url = `https://mtumcu.herokuapp.com/api/u/signup`
+    const data = { phone: '254' + this.state.text }
+    try {
+      const response = await fetch(url, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      let res = await response.json()
+      res.error ? alert(res.error):alert(res.message)
+      if(res.error) alert(res.error)
+
+
+
+
+      console.log("===========================")
+      console.log(res)
+      console.log("===========================")
+
+
+
+    } catch (err) {
+      console.log("===========================")
+      console.log(err.message)
+      console.log("===========================")
+    }
   }
 
   render() {
@@ -36,16 +70,16 @@ export default class Welcome extends Component {
             style={[
               this.state.istext === true
                 ? {
-                    alignSelf: "center",
-                    width: "20%",
-                    height: "20%",
-                    backgroundColor: "white"
-                  }
+                  alignSelf: "center",
+                  width: "20%",
+                  height: "20%",
+                  backgroundColor: "white"
+                }
                 : {
-                    width: "40%",
-                    height: "40%",
-                    backgroundColor: "rgba(255,255,255, 0.5)"
-                  }
+                  width: "40%",
+                  height: "40%",
+                  backgroundColor: "rgba(255,255,255, 0.5)"
+                }
             ]}
             resizeMode="contain"
           />
@@ -76,6 +110,7 @@ export default class Welcome extends Component {
               backgroundColor: "rgba(52, 52, 52, 0.2)",
               flexDirection: "row",
               alignItems: "center"
+
             }}
           >
             <Image
@@ -92,7 +127,7 @@ export default class Welcome extends Component {
               }}
             >
               {" "}
-              +254{" "}
+              +{"254"}
             </Text>
             <TextInput
               keyboardType="numeric"
@@ -112,20 +147,21 @@ export default class Welcome extends Component {
                   text: text,
                   textLength: text.length
                 })
-              } //.................... handle input changes.........................
+              }
+              //.................... handle input changes.........................
               onSubmitEditing={() => this.state.text}
             />
             <Icon
-              onPress={() => this.props.navigation.navigate("Drawer")}
+              onPress={() => this._pushNumber()}
               name="arrowright"
               size={35}
               style={
                 this.state.textLength === 9
                   ? {
-                      color: this.state.arrowcolor,
-                      paddingHorizontal: 10,
-                      fontWeight: "bold"
-                    }
+                    color: this.state.arrowcolor,
+                    paddingHorizontal: 10,
+                    fontWeight: "bold"
+                  }
                   : { color: "transparent" }
               }
             />

@@ -7,4 +7,4 @@ export default  createSwitchNavigator({
       welcome: Welcome,
       Drawer: Dashboard
     },
-    {initialRouteName:"Drawer"});
+    {initialRouteName:"welcome"});

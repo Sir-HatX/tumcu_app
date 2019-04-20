@@ -11,5 +11,5 @@ const urls={
 
 
 export default configs ={
-    colors
+    colors,urls
 }
