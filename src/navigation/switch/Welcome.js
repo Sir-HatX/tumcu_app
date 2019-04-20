@@ -8,6 +8,7 @@ import {
   ImageBackground,
   Dimensions,
   TextInput,
+  ActivityIndicator
 } from "react-native";
 import axios from 'axios'
 import { withNavigation } from "react-navigation"
@@ -23,11 +24,14 @@ export default class Welcome extends Component {
       text: "",
       arrowcolor: "white",
       textLength: "",
-      isloading:false,
+      isLoading: "none",
     };
   }
 
   _pushNumber = async () => {
+    this.setState({
+      isLoading: 'flex'
+    })
     const url = `https://mtumcu.herokuapp.com/api/u/signup`
     const data = { phone: '254' + this.state.text }
     try {
@@ -39,31 +43,33 @@ export default class Welcome extends Component {
         },
       })
       let res = await response.json()
-      res.error ? alert(res.error):alert(res.message)
-      if(res.error) alert(res.error)
+      if (res.error) {
+        throw new Error(res.error)
+      }
 
+      alert("Verification on progress")
 
-
-
-      console.log("===========================")
-      console.log(res)
-      console.log("===========================")
-
-
-
+      this.setState({ isLoading: "none" })
     } catch (err) {
-      console.log("===========================")
-      console.log(err.message)
-      console.log("===========================")
+      this.setState({ isLoading: "none" })
+      alert("Error try again")
     }
   }
 
   render() {
+
     return (
       <ImageBackground
         source={require("../../Assets/hex.png")}
         style={{ width: "100%", height: "100%" }}
       >
+
+        <View style={{ display: this.state.isLoading, postion: "absolute", top: height / 2, width: 60, height: 60, justifyContent: 'center', paddingLeft: width / 2 }}>
+
+          <ActivityIndicator size="large" color="white" />
+
+        </View>
+
         <View style={styles.LogoContainer}>
           <Image
             source={require("../../Assets/tumcu_logo.png")}
@@ -71,8 +77,8 @@ export default class Welcome extends Component {
               this.state.istext === true
                 ? {
                   alignSelf: "center",
-                  width: "20%",
-                  height: "20%",
+                  width: "30%",
+                  height: "30%",
                   backgroundColor: "white"
                 }
                 : {
@@ -149,10 +155,12 @@ export default class Welcome extends Component {
                 })
               }
               //.................... handle input changes.........................
-              onSubmitEditing={() => this.state.text}
+              onSubmitEditing={() =>this.state.text}
             />
             <Icon
-              onPress={() => this._pushNumber()}
+              onPress={() => {this._pushNumber()
+        
+              }}
               name="arrowright"
               size={35}
               style={
@@ -178,6 +186,7 @@ export default class Welcome extends Component {
             onPress={() => this.props.navigation.navigate("Drawer")}
           />
        */}
+
       </ImageBackground>
     );
   }
