@@ -6,8 +6,7 @@ import Event from 'react-native-vector-icons/MaterialIcons';
 import configs from '../../../Config/configs'
 
 import Home from './Home/HomeStack';
-import Gallery from './Gallery/Gallery';
-//import Events from './Events/Events';
+import Gallery from './Gallery/GalleryStack';
 import Learn from './Learn/Learn';
 
 export default createMaterialBottomTabNavigator({

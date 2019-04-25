@@ -2,29 +2,28 @@ import React from 'react';
 import {TouchableOpacity, Image} from 'react-native';
 import {createStackNavigator} from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import  Main  from "./Home";
+import  Main  from "./Gallery";
 import Details from './More';
+import configs from '../../../../Config/configs'
 
 export default createStackNavigator({
-    Home: {
+    GALLERY: {
         screen: Main,
         navigationOptions: ({ navigation }) => ({
-          title: 'Home',
+          title: 'GALLERY',
+          headerTitleStyle: { color: 'white' },
+          headerStyle: { backgroundColor: configs.colors.main_dark },
           headerLeft: (
             <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-            <Image
-            source={require("../../../../Assets/tumcu_logo.png")}
-            style={{ height: 50, width: 50, margin: 10 }}
-          />
-              {/* <Icon
+              <Icon
                 name="bars"
                 style={{
-                  color: '#aaa',
+                  color: 'white',
                   padding: 10,
                   marginLeft: 10,
                   fontSize: 30,
                 }}
-              /> */}
+              />
             </TouchableOpacity>
           ),
         }),
