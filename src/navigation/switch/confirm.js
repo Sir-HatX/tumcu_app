@@ -4,9 +4,13 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  ImageBackground,
+  Dimensions,
+  Image
 } from "react-native";
 
+const { width, height } = Dimensions.get("window");
 const CODE_LENGTH = new Array(6).fill(0);
 
 class Confirm extends Component {
@@ -56,43 +60,62 @@ class Confirm extends Component {
     const hideInput = !(values.length < CODE_LENGTH.length);
 
     return (
-      <View style={styles.container}>
-        <TouchableWithoutFeedback onPress={this.handlePress}>
-          <View style={styles.wrap}>
-            {CODE_LENGTH.map((v, index) => {
-              const selected = values.length === index;
-              const filled =
-                values.length === CODE_LENGTH.length &&
-                index === CODE_LENGTH.length - 1;
-              const removeBorder =
-                index === CODE_LENGTH.length - 1 ? styles.noBorder : undefined;
-              return (
-                <View style={[styles.display, removeBorder]} key={index}>
-                  <Text style={styles.text}>{values[index] || ""}</Text>
-                  {(selected || filled) && focused && (
-                    <View style={styles.shadows} />
-                  )}
-                </View>
-              );
-            })}
-            <TextInput
-              value=""
-              ref={this.input}
-              onChangeText={this.handleChange}
-              onKeyPress={this.handleKeyPress}
-              onFocus={this.handleFocus}
-              onBlur={this.handleBlur}
-              style={[
-                styles.input,
-                {
-                  left: selectedIndex * 32,
-                  opacity: hideInput ? 0 : 1
-                }
-              ]}
-            />
-          </View>
-        </TouchableWithoutFeedback>
-      </View>
+      <ImageBackground
+        source={require("../../Assets/hex.png")}
+        style={{ width: "100%", height: "100%" }}
+      >
+       <View style={styles.LogoContainer}>
+                <Image
+                  source={require("../../Assets/tumcu_logo.png")}
+                  style={styles.logo}
+                  resizeMode="contain"
+                />
+              </View>
+        <View style={styles.container}>
+        <Text style={styles.headertext}>Enter verification code</Text>
+
+          <TouchableWithoutFeedback onPress={this.handlePress}>
+            <View style={styles.wrap}>
+              {CODE_LENGTH.map((v, index) => {
+                const selected = values.length === index;
+                const filled =
+                  values.length === CODE_LENGTH.length &&
+                  index === CODE_LENGTH.length - 1;
+                const removeBorder =
+                  index === CODE_LENGTH.length - 1
+                    ? styles.noBorder
+                    : undefined;
+                return (
+                  <View style={[styles.display, removeBorder]} key={index}>
+                    <Text style={styles.text}>{values[index] || ""}</Text>
+                    {(selected || filled) && focused && (
+                      <View style={styles.shadows} />
+                    )}
+                  </View>
+                );
+              })}
+             
+              <TextInput
+                keyboardType="numeric"
+                autoFocus={true}
+                value=""
+                ref={this.input}
+                onChangeText={this.handleChange}
+                onKeyPress={this.handleKeyPress}
+                onFocus={this.handleFocus}
+                onBlur={this.handleBlur}
+                style={[
+                  styles.input,
+                  {
+                    left: selectedIndex * 32,
+                    opacity: hideInput ? 0 : 1
+                  }
+                ]}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+      </ImageBackground>
     );
   }
 }
@@ -105,14 +128,14 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   wrap: {
-    borderWidth: 1,
-    borderColor: "rgba(0, 0, 0, 0.2)",
+    borderWidth: 3,
+    borderColor: "rgba(255, 255, 255, 0.5)",
     position: "relative",
     flexDirection: "row"
   },
   display: {
-    borderRightWidth: 1,
-    borderRightColor: "rgba(0, 0, 0, 0.2)",
+    borderRightWidth: 3,
+    borderRightColor: "rgba(255, 255, 255, 0.5)",
     width: 32,
     height: 58,
     alignItems: "center",
@@ -120,7 +143,8 @@ const styles = StyleSheet.create({
     overflow: "visible"
   },
   text: {
-    fontSize: 32
+    fontSize: 32,
+    color: "white"
   },
   noBorder: {
     borderRightWidth: 0
@@ -140,7 +164,25 @@ const styles = StyleSheet.create({
     top: -4,
     bottom: -4,
     right: -4,
-    borderColor: "rgba(58, 151, 212, 0.28)",
+    borderColor: "rgba(0, 0, 100, 5)",
     borderWidth: 4
+  },
+  LogoContainer: {
+    width: width,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "transparent"
+  },
+  logo: {
+    alignSelf: "center",
+    width: "30%",
+    height: "50%",
+    backgroundColor:"rgba(255, 255, 255, 0.5)",
+  },
+  headertext: {
+    fontSize: 20,
+    paddingHorizontal: 10,
+    color: "white",
+    fontWeight: "500"
   }
 });
