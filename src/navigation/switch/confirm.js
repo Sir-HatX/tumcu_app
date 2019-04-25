@@ -20,8 +20,8 @@ class Confirm extends Component {
     this.state = {
       value: "",
       focused: false,
-      isLoading: "flex",
-      timer: 3
+      isLoading: "none",
+      timer: 60
     };
   }
 
@@ -69,12 +69,15 @@ class Confirm extends Component {
     }
   };
 
+  
   //wait for server response
   _waitresponse = async => {
     this.setState({
       isLoading: "true"
     });
   };
+
+
   render() {
     this.state.timer === 0 ? this.props.navigation.navigate("welcome") : {};
     () => this.componentWillUnmount();
