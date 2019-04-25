@@ -7,17 +7,36 @@ import {
   TouchableWithoutFeedback,
   ImageBackground,
   Dimensions,
-  Image
+  Image,
+  ActivityIndicator
 } from "react-native";
 
 const { width, height } = Dimensions.get("window");
 const CODE_LENGTH = new Array(6).fill(0);
 
 class Confirm extends Component {
-  state = {
-    value: "",
-    focused: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: "",
+      focused: false,
+      isLoading: "flex",
+      timer: 3
+    };
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(
+      () => this.setState(prevState => ({ timer: prevState.timer - 1 })),
+      1000
+    );
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+    clearTimeout(this.interval);
+  }
+  
   input = React.createRef();
   handlePress = () => {
     this.input.current.focus();
@@ -50,7 +69,15 @@ class Confirm extends Component {
     }
   };
 
+  //wait for server response
+  _waitresponse = async => {
+    this.setState({
+      isLoading: "true"
+    });
+  };
   render() {
+    this.state.timer === 0 ? this.props.navigation.navigate("welcome") : {};
+    () => this.componentWillUnmount();
     const { value, focused } = this.state;
     const values = value.split("");
     const selectedIndex =
@@ -64,15 +91,31 @@ class Confirm extends Component {
         source={require("../../Assets/hex.png")}
         style={{ width: "100%", height: "100%" }}
       >
-       <View style={styles.LogoContainer}>
-                <Image
-                  source={require("../../Assets/tumcu_logo.png")}
-                  style={styles.logo}
-                  resizeMode="contain"
-                />
-              </View>
+        <Text style={[styles.veritext, {}]}>
+          Enter the verification code from TUM CU message within
+          <Text style={{ color: "black" }}>_{this.state.timer}_</Text>
+          seconds!
+        </Text>
+
+        <View
+          style={[
+            styles.ActivityIndicatorcontainer,
+            {
+              display: this.state.isLoading
+            }
+          ]}
+        >
+          <ActivityIndicator size="large" color="white" />
+        </View>
+        <View style={styles.LogoContainer}>
+          <Image
+            source={require("../../Assets/tumcu_logo.png")}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+        </View>
         <View style={styles.container}>
-        <Text style={styles.headertext}>Enter verification code</Text>
+          <Text style={styles.headertext}>Enter verification code</Text>
 
           <TouchableWithoutFeedback onPress={this.handlePress}>
             <View style={styles.wrap}>
@@ -94,7 +137,7 @@ class Confirm extends Component {
                   </View>
                 );
               })}
-             
+
               <TextInput
                 keyboardType="numeric"
                 autoFocus={true}
@@ -164,7 +207,7 @@ const styles = StyleSheet.create({
     top: -4,
     bottom: -4,
     right: -4,
-    borderColor: "rgba(0, 0, 100, 5)",
+    borderColor: "rgba(0, 0, 100, 0.7)",
     borderWidth: 4
   },
   LogoContainer: {
@@ -177,12 +220,29 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: "30%",
     height: "50%",
-    backgroundColor:"rgba(255, 255, 255, 0.5)",
+    backgroundColor: "rgba(255, 255, 255, 0.5)"
   },
   headertext: {
     fontSize: 20,
     paddingHorizontal: 10,
     color: "white",
     fontWeight: "500"
+  },
+  veritext: {
+    position: "absolute",
+    fontSize: 20,
+    paddingHorizontal: 10,
+    color: "white",
+    fontWeight: "300",
+    paddingTop: width / 2 - 20,
+    paddingLeft: 20
+  },
+  ActivityIndicatorcontainer: {
+    position: "absolute",
+    top: height / 2,
+    width: 60,
+    height: 60,
+    justifyContent: "center",
+    paddingLeft: width / 2
   }
 });

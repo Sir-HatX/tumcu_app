@@ -10,5 +10,5 @@ export default createSwitchNavigator(
     Drawer: Dashboard,
     welcome: Welcome,
   },
-  {initialRouteName:"Confirm"});
+  {initialRouteName:"welcome"});
 

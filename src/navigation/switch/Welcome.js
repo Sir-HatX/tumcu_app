@@ -24,13 +24,14 @@ export default class Welcome extends Component {
       arrowcolor: "white",
       textLength: "",
       isLoading: "none",
-      verify: false
+      verify: false,
     };
   }
 
+ 
   _pushNumber = async () => {
     this.setState({
-      isLoading: "true"
+      isLoading: "flex"
     });
     const url = `https://mtumcu.herokuapp.com/api/u/signup`;
     const data = { phone: "254" + this.state.text };
@@ -47,7 +48,8 @@ export default class Welcome extends Component {
         throw new Error(res.error);
       }
       this.setState({ verify: true });
-      alert("Verification on progress");
+      this.props.navigation.navigate('Confirm')
+      // alert("Verification on progress");
 
       this.setState({ isLoading: "none" });
     } catch (err) {
@@ -62,7 +64,7 @@ export default class Welcome extends Component {
         source={require("../../Assets/hex.png")}
         style={{ width: "100%", height: "100%" }}
       >
-      
+
         <View
           style={{
             display: this.state.isLoading,
@@ -120,7 +122,7 @@ export default class Welcome extends Component {
           <View
             style={{
               flex: 1.5,
-              backgroundColor: "rgba(255, 255, 255, 0.5)",
+              backgroundColor: "rgba(52, 52, 52, 0.2)",
               flexDirection: "row",
               alignItems: "center"
             }}
